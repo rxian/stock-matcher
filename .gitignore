@@ -1,4 +1,7 @@
-.idea/
+# misc
+.idea
+.DS_Store
 
-flask-api/venv/
-flask-api/__pycache__/
+flask-api/venv
+flask-api/__pycache__
+
