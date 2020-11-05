@@ -12,3 +12,5 @@ The data we scrape will be formatted as a csv in the following format:
 |        |      |      |       |      |     |        |            |
 |        |      |      |       |      |     |        |            |
 |        |      |      |       |      |     |        |            |
+
+For the purposes of our first checkpoint, we will start with 100 days of historical data.
