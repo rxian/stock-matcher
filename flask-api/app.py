@@ -8,7 +8,7 @@ from listing import listing
 # TODO: set development/production flag from cli
 app = flask.Flask(__name__)
 app.config.from_object(app_config['development'])
-app.register_blueprint(listing, url_prefix="/api/stock")
+app.register_blueprint(listing, url_prefix="/api/listing")
 
 CORS(app)
 
