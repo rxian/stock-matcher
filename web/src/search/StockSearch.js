@@ -1,23 +1,13 @@
 import React from 'react';
 import { Search } from "semantic-ui-react";
 
-import './StockSearch.css';
+import './StockSearch.scss';
 import API from '../api';
 import stockMarketImage from '../static/stock-market.png';
 
-function StockSearch() {
-  return (
-    <div className="App">
-      <SearchStandard/>
-    </div>
-  );
-}
-
-export default StockSearch;
-
 
 // TODO: try React hooks!
-class SearchStandard extends React.Component {
+class StockSearch extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -51,6 +41,7 @@ class SearchStandard extends React.Component {
             <Search
                 loading={loading}
                 // onResultSelect={(e, data) => this.handleSearchChange(data)}
+                // open
                 onSearchChange={this.handleSearchChange}
                 results={data}
             />
@@ -66,3 +57,5 @@ function processResult(data) {
         }
     });
 }
+
+export default StockSearch;

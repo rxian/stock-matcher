@@ -1,0 +1,21 @@
+.App {
+  text-align: center;
+}
+
+.ui.search {
+  .ui.input {
+    width: 100%;
+  }
+}
+
+.ui.search>.results {
+  width: 100% !important;
+}
+
+.ui.input>.prompt {
+  width: 100%;
+}
+
+.ui.search.active .prompt {
+  border-radius: 1rem 1rem .28571429rem .28571429rem !important;
+}
