@@ -2,6 +2,6 @@
 .idea
 .DS_Store
 
-flask-api/venv
-flask-api/__pycache__
+venv
+__pycache__
 
