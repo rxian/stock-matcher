@@ -2,13 +2,13 @@ import flask
 from flask_cors import CORS
 from config import app_config
 from database import mysql
-from listing import listing
+import listings
 
 # app configs
 # TODO: set development/production flag from cli
 app = flask.Flask(__name__)
 app.config.from_object(app_config['development'])
-app.register_blueprint(listing, url_prefix="/api/listing")
+app.register_blueprint(listings.bp, url_prefix="/api/listings")
 
 CORS(app)
 

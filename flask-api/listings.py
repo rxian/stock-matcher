@@ -4,10 +4,10 @@ from flask import jsonify
 from database import mysql
 from utils import like_string, construct_results
 
-listing = Blueprint('listing', __name__)
+bp = Blueprint('listings', __name__)
 
 
-@listing.route('/', methods=['GET'])
+@bp.route('/', methods=['GET'])
 def listings():
     conn = mysql.connect()
     cursor = conn.cursor()
