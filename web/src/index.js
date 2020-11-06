@@ -1,28 +1,41 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter, Route, Switch, useParams } from 'react-router-dom';
-import './index.css';
+import './index.scss';
 import StockSearch from './search/StockSearch';
 import Admin from './admin/Admin';
 import reportWebVitals from './reportWebVitals';
 import 'semantic-ui-css/semantic.min.css';
+import {Header, Icon} from "semantic-ui-react";
 
 ReactDOM.render(
     <BrowserRouter>
         <Switch>
             <Route exact path="/admin" component={Admin}/>
             <Route path="/">
-                <StockSearch/>
-                <Switch>
-                    <Route path={"/listing/:id"}>
-                        <Child/>
-                    </Route>
-                </Switch>
+                <App/>
             </Route>
         </Switch>
     </BrowserRouter>,
     document.getElementById('root')
 );
+
+function App() {
+    return (
+        <div className="App">
+            <Header as='h1'>
+                <Icon name='modx' />
+                Stock Matcher
+            </Header>
+            <StockSearch/>
+            <Switch>
+                <Route path={"/listing/:id"}>
+                    <Child/>
+                </Route>
+            </Switch>
+        </div>
+    )
+}
 
 function Child() {
     // We can use the `useParams` hook here to access
