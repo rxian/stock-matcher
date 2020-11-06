@@ -31,7 +31,7 @@ class SearchStandard extends React.Component {
     handleSearchChange = (e, data) => {
         this.setState({ loading: true });
 
-        API.get('/api/stock', {
+        API.get('/api/listings', {
             params: {
                 keyword: data.value,
             }
