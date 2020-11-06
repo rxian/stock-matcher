@@ -1,4 +1,5 @@
 import flask
+from flask_cors import CORS
 from config import app_config
 from database import mysql
 from listing import listing
@@ -8,6 +9,8 @@ from listing import listing
 app = flask.Flask(__name__)
 app.config.from_object(app_config['development'])
 app.register_blueprint(listing, url_prefix="/api/stock")
+
+CORS(app)
 
 mysql.init_app(app)
 
