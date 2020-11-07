@@ -8,7 +8,7 @@ bp = Blueprint('listings', __name__)
 
 import sys
 sys.path.append('../sql')
-import queries
+import sqlalchemy, queries
 
 @bp.route('/', methods=['GET'])
 def get_listings():
@@ -43,6 +43,8 @@ def get_listing(listing_id):
     :raise: 404 Error if no listing with listing_id is found
     :return: 200 if success, with data field in the response body.
     """
+
+
 
     cursor = connect_db()
 
