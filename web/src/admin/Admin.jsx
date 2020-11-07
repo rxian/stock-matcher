@@ -75,8 +75,8 @@ class AdminTable extends React.Component {
                     {/*</Table.Cell>*/}
                     <Table.Cell>
                         <EditModal
-                            name={item['name']}
-                            symbol={item['symbol']}
+                            nameOld={item['name']}
+                            symbolOld={item['symbol']}
                             listingID={item['listingID']}
                             active={item['active'] !== 0}
                             tracked={item['tracked'] !== 0}

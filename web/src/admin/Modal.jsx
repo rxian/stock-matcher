@@ -72,7 +72,16 @@ class EditModal extends React.Component {
         success: false,
     };
 
+    componentDidMount() {
+        const { symbolOld, nameOld } = this.props;
+        this.setState({
+            name: nameOld !== undefined? nameOld: "",
+            symbol: symbolOld !== undefined? symbolOld: "",
+        })
+    }
+
     handleChange = (e, { name, value }) => {
+        console.log(name, value)
         this.setState({ [name]: value });
     };
 
@@ -110,8 +119,7 @@ class EditModal extends React.Component {
 
     render() {
         const { listingID } = this.props;
-        const { success } = this.state;
-
+        const { success, name, symbol } = this.state;
         return (
             <Modal trigger={<Button icon><Icon name='edit'/></Button>}>
                 <Modal.Header>{`Edit Listing: ${listingID}`}</Modal.Header>
@@ -122,12 +130,14 @@ class EditModal extends React.Component {
                     />
                     <Form.Input
                         label="Company"
-                        name="company"
+                        name="name"
+                        value={name}
                         onChange={this.handleChange}
                     />
                     <Form.Input
                         label="Symbol"
                         name="symbol"
+                        value={symbol}
                         onChange={this.handleChange}
                     />
                     <Button type='submit'>Submit</Button>
