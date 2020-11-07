@@ -20,6 +20,10 @@ class StockSearch extends React.Component {
     }
 
     handleSearchChange = (e, data) => {
+        if (data.value === "") {
+            return;
+        }
+
         this.setState({ loading: true });
 
         API.get('/api/listings', {
