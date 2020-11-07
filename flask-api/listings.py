@@ -10,6 +10,7 @@ import sys, pathlib
 sys.path.append(str((pathlib.Path(__file__).parents[0] / ".." / "sql").absolute()))
 import sqlalchemy, connection, queries
 
+
 @bp.route('/', methods=['GET'])
 def get_listings():
     """ Get all listings with or without a keyword
@@ -25,13 +26,12 @@ def get_listings():
 
     prefix = request.args.get('keyword')
 
-    data = queries.getSymbols(prefix)
+    data = queries.getSymbols(prefix if prefix else '', json=True)
 
     if not data:
         abort(404, 'No suggestions')
-
     return jsonify({
-        "data": construct_results(cursor, data),
+        "data": data,
     }), 200
 
 
@@ -86,13 +86,6 @@ def create_listing():
 
     queries.insertValues('Listings',(symbol,name,active,tracked),schema=('symbol','name','active','tracked'))
 
-    # cursor = connect_db()
-    # query = "INSERT INTO Listings(symbol, name) VALUES (%s, %s)"
-    # res = cursor.execute(query, (symbol, name))
-
-    # print(cursor.fetchone())
-    # print(res)
-
     return jsonify({
         "data": None
     }), 200
@@ -116,12 +109,12 @@ def update_listing(listing_id):
     """
 
     req = request.get_json()
-    check_json(req, ["symbol", "name", "active", "tracked"])
+    check_json(req, ["symbol", "name"])
 
     symbol_new = req["symbol"]
     name_new = req["name"]
-    active_new = req["active"]
-    tracked_new = req["tracked"]
+    active_new = req["active"] if 'active' in req else None
+    tracked_new = req["tracked"] if 'tracked' in req else None
 
     q = sqlalchemy.text("""
         UPDATE Listings
