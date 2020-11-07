@@ -30,9 +30,14 @@ code {
         padding-top: 3em;
         font-size: 3em;
         color: $header-text-color;
+
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
         
         .icon {
             color: $header-icon-color;
+            font-size: 1.4em;
         }
     }
 }

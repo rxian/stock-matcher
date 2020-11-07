@@ -24,7 +24,7 @@ function App() {
     return (
         <div className="App">
             <Header as='h1'>
-                <Icon name='modx' />
+                <Icon name='pills'/>
                 Stock Matcher
             </Header>
             <StockSearch/>
