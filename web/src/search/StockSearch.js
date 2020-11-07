@@ -53,7 +53,7 @@ class StockSearch extends React.Component {
                 resultRenderer={(item) => <SearchResult
                     title={item.title}
                     image={item.image}
-                    description={item.name}
+                    description={item.description}
                     as={Link}
                     to={`/listing/${item.listing_id}`}
                 />}
