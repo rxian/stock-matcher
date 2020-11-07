@@ -1,31 +1,111 @@
 import React from 'react';
-import './Admin.css';
-import {Button, Modal, Form, Search} from 'semantic-ui-react';
+import './Admin.scss';
+import {Search, Table, Icon} from 'semantic-ui-react';
+import API from '../api';
+import {AddModal, EditModal} from "./Modal";
 
-function Admin() {
-    return (
-        <div className="Admin">
-            <AddModal/>
-            <EditSearch/>
-        </div>
-    );
+class Admin extends React.Component{
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            data: []
+        };
+    }
+
+    getData = () => {
+        console.log("getting data");
+        API.get('/api/listings')
+            .then(res => {
+                this.setState({
+                    data: res.data['data'],
+                })
+            })
+    };
+
+    componentDidMount() {
+        this.getData()
+    }
+
+    render(){
+        const { data } = this.state;
+
+        return (
+            <div className="Admin">
+                {/*<EditSearch/>*/}
+                <AdminTable data={data} updateHandler={this.getData}/>
+            </div>
+        );
+    }
 }
 
 export default Admin;
 
-class AddModal extends React.Component {
+class AdminTable extends React.Component {
     render() {
+        const { data, updateHandler } = this.props;
+
+        if (data === null) {
+            console.log('no data yet');
+        }
+
+        data.sort((a, b) => {
+           return a['listingID']-b['listingID'];
+        });
+
+        const rows = data.map((item) => {
+            return (
+                <Table.Row key={item['listingID']}>
+                    <Table.Cell>
+                        {item['listingID']}
+                    </Table.Cell>
+                    <Table.Cell>
+                        {item['symbol']}
+                    </Table.Cell>
+                    <Table.Cell>
+                        {item['name']}
+                    </Table.Cell>
+                    {/*<Table.Cell>*/}
+                    {/*    {item['active']? <Icon name="checkmark"/>:*/}
+                    {/*            <Icon name="close"/>}*/}
+                    {/*</Table.Cell>*/}
+                    {/*<Table.Cell>*/}
+                    {/*    {item['tracked']? <Icon name="checkmark"/>:*/}
+                    {/*        <Icon name="close"/>}*/}
+                    {/*</Table.Cell>*/}
+                    <Table.Cell>
+                        <EditModal
+                            name={item['name']}
+                            symbol={item['symbol']}
+                            listingID={item['listingID']}
+                            active={item['active'] !== 0}
+                            tracked={item['tracked'] !== 0}
+                            updateHandler={updateHandler}
+                        />
+                    </Table.Cell>
+                </Table.Row>
+            )
+        });
         return (
-            <Modal
-                trigger={<Button>Add Entry</Button>}
-            >
-                <Modal.Header>Add Entry</Modal.Header>
-                <Form>
-                    <Form.Input label="Company" required/>
-                    <Form.Input label="Symbol" required/>
-                    <Button type='submit'>Submit</Button>
-                </Form>
-            </Modal>
+            <div>
+                <AddModal updateHandler={updateHandler}/>
+                <Table celled>
+                    <Table.Header>
+                        <Table.Row>
+                            <Table.HeaderCell>Listing ID</Table.HeaderCell>
+                            <Table.HeaderCell>Symbol</Table.HeaderCell>
+                            <Table.HeaderCell>Name</Table.HeaderCell>
+                            {/*<Table.HeaderCell>Active</Table.HeaderCell>*/}
+                            {/*<Table.HeaderCell>Tracked</Table.HeaderCell>*/}
+                            <Table.HeaderCell>Edit</Table.HeaderCell>
+                        </Table.Row>
+                    </Table.Header>
+                    <Table.Body>
+                        {rows}
+                    </Table.Body>
+                </Table>
+            </div>
+
         )
     }
 }
@@ -37,3 +117,4 @@ class EditSearch extends React.Component {
         )
     }
 }
+

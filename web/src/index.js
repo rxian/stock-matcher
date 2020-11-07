@@ -44,10 +44,12 @@ function Child() {
 
     return (
         <div>
-            <h3>ID: {id}</h3>
+            <h3 style={{"text-align": "center", "color":"#d6c9f8"}}>This is the detail page for listing: {id}</h3>
         </div>
     );
 }
+
+
 
 // If you want to start measuring performance in your search, pass a function
 // to log results (for example: reportWebVitals(console.log))

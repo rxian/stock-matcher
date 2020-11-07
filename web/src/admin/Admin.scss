@@ -1,4 +1,15 @@
+$checkmark-color: #14800d;
+$close-color: #9c0609;
+
 .Admin {
     text-align: center;
-    padding: 5em 15em;
+    padding: 5em 30em;
+}
+
+.icon.checkmark {
+    color: $checkmark-color;
+}
+
+.icon.close {
+    color: $close-color;
 }

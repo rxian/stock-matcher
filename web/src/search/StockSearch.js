@@ -31,7 +31,15 @@ class StockSearch extends React.Component {
                     loading: false,
                     results: res.data['data'],
                 })
-            });
+        }).catch((e) => {
+            console.log(e);
+            if (e.response.status === 404) {
+                this.setState({
+                    results: [],
+                    loading: false
+                })
+            }
+        })
     };
 
     render() {
@@ -59,6 +67,7 @@ class StockSearch extends React.Component {
 function processResult(data) {
     return data.map((d) => {
         return {
+            key: d['listingID'],
             listing_id: d['listingID'],
             title: d['symbol'],
             description: d['name'],

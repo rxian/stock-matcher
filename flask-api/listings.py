@@ -30,7 +30,7 @@ def get_listings():
         prefix = ''
 
     q = sqlalchemy.text("""
-        SELECT * FROM Listings WHERE symbol LIKE :x""")
+        SELECT * FROM Listings WHERE symbol LIKE :x ORDER BY symbol""")
 
     with connection.engine.connect() as conn:
         data = [dict(zip(r.keys(), r)) for r in conn.execute(q,x='%s%%' % prefix)]
@@ -93,6 +93,7 @@ def create_listing():
     active = req['active'] if 'active' in req else None
     tracked = req['tracked'] if 'tracked' in req else None
 
+    print(symbol, name, active, tracked)
     queries.insertValues('Listings',(symbol,name,active,tracked),schema=('symbol','name','active','tracked'))
 
     return jsonify({
