@@ -26,10 +26,19 @@ def get_listings():
 
     prefix = request.args.get('keyword')
 
-    data = queries.getSymbols(prefix if prefix else '', json=True)
+    if prefix is None:
+        prefix = ''
+
+    q = sqlalchemy.text("""
+        SELECT * FROM Listings WHERE symbol LIKE :x""")
+
+    with connection.engine.connect() as conn:
+        data = [dict(zip(r.keys(), r)) for r in conn.execute(q,x='%s%%' % prefix)]
+
+    # data = queries.getSymbols(prefix if prefix else '', json=True)
 
     if not data:
-        abort(404, 'No suggestions')
+        abort(404, 'No listing found')
     return jsonify({
         "data": data,
     }), 200
