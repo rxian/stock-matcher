@@ -6,6 +6,9 @@ from utils import like_string, construct_results, check_json
 
 bp = Blueprint('listings', __name__)
 
+import sys
+sys.path.append('../sql')
+import queries
 
 @bp.route('/', methods=['GET'])
 def get_listings():
@@ -21,18 +24,13 @@ def get_listings():
     """
     cursor = connect_db()
 
-    keyword = request.args.get('keyword')
-    if keyword is None:
-        query = "SELECT * FROM Listings"
-        cursor.execute(query)
-    else:
-        query = "SELECT * FROM Listings WHERE symbol LIKE %s"
-        cursor.execute(query, (like_string(keyword),))
+    prefix = request.args.get('keyword')
 
-    if cursor.rowcount == 0:
-        abort(404, 'No listing found')
+    data = queries.getSymbols(prefix)
 
-    data = cursor.fetchall()
+    if not data:
+        abort(404, 'No suggestions')
+
     return jsonify({
         "data": construct_results(cursor, data),
     }), 200
