@@ -6,9 +6,9 @@ from utils import like_string, construct_results, check_json
 
 bp = Blueprint('listings', __name__)
 
-import sys
-sys.path.append('../sql')
-import sqlalchemy, queries
+import sys, pathlib
+sys.path.append(str((pathlib.Path(__file__).parents[0] / ".." / "sql").absolute()))
+import sqlalchemy, connection, queries
 
 @bp.route('/', methods=['GET'])
 def get_listings():
@@ -22,7 +22,6 @@ def get_listings():
     :raise: 404 Error if no listing is found
     :return: 200 if success, with data field in the response body.
     """
-    cursor = connect_db()
 
     prefix = request.args.get('keyword')
 
@@ -43,8 +42,6 @@ def get_listing(listing_id):
     :raise: 404 Error if no listing with listing_id is found
     :return: 200 if success, with data field in the response body.
     """
-
-
 
     cursor = connect_db()
 
@@ -80,12 +77,14 @@ def create_listing():
     req = request.get_json()
     check_json(req, ["symbol"])
 
-    print(req)
+    # print(req)
 
     symbol = req['symbol']
     name = req['name'] if 'name' in req else None
     active = req['active'] if 'active' in req else None
     tracked = req['tracked'] if 'tracked' in req else None
+
+    queries.insertValues('Listings',(symbol,name,active,tracked),schema=('symbol','name','active','tracked'))
 
     # cursor = connect_db()
     # query = "INSERT INTO Listings(symbol, name) VALUES (%s, %s)"
@@ -124,9 +123,14 @@ def update_listing(listing_id):
     active_new = req["active"]
     tracked_new = req["tracked"]
 
-    cursor = connect_db()
-    query = "UPDATE Listings SET symbol=%s, name=%s, active=%s, tracked=%s"
-    cursor.execute(query, (symbol_new, name_new, active_new, tracked_new))
+    q = sqlalchemy.text("""
+        UPDATE Listings
+        SET symbol=:symbol, name=:name, active=:active, tracked=:tracked
+        WHERE listingID=:listingID
+        """)
+
+    with connection.engine.connect() as conn:        
+        conn.execute(q,symbol=symbol_new,name=name_new,active=active_new,tracked=tracked_new,listingID=listing_id)
 
     return jsonify({
         "data": None,
@@ -135,6 +139,13 @@ def update_listing(listing_id):
 
 @bp.route('/<listing_id>', methods=['DELETE'])
 def delete_listing(listing_id):
+
+    q = sqlalchemy.text("""
+        DELETE FROM Listings WHERE listingID=:listingID""")
+
+    with connection.engine.connect() as conn:        
+        conn.execute(q,listingID=listing_id)
+
     return jsonify({
         "data": None
     }), 200

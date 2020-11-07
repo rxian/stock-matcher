@@ -3,17 +3,27 @@ import pygtrie
 
 #%%
 symbolsTrie = None
-def getSymbols(prefix=''):
+def getSymbols(prefix='',json=False):
     global symbolsTrie
     if not symbolsTrie:
         symbolsTrie = pygtrie.CharTrie()
         with engine.connect() as conn:
             for r in conn.execute("SELECT symbol, listingID FROM Listings"):
-                symbolsTrie[r[0]] = r[1]
+                if r[0] not in symbolsTrie:
+                    symbolsTrie[r[0]] = []    
+                symbolsTrie[r[0]] += [r[1]]
+    if prefix is None:
+        prefix = ''
     if symbolsTrie.has_node(prefix):
-        return symbolsTrie.items(prefix)
+        res = symbolsTrie.items(prefix)
+        res = [[x[0],y] for x in res for y in x[1]]
+        if json:
+            res = [dict(zip(['symbol', 'listingID'], x)) for x in res]
+        return res
     else:
         return []
+
+
 
 def insertValues(table,values,schema=None):
     '''
