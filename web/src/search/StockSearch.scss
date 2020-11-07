@@ -9,11 +9,12 @@
 
     .prompt {
         width: 100%;
+        border-radius: 1.4rem;
     }
 
     &.active {
         .prompt {
-            border-radius: 1rem 1rem .28571429rem .28571429rem !important;
+            border-radius: 1.4rem 1.4rem .5rem .5rem/1.4rem 1.4rem .5rem .5rem !important;
         }
     }
 }
