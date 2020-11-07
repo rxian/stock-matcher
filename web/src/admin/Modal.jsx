@@ -39,7 +39,7 @@ class AddModal extends React.Component {
     render() {
         const { success } = this.state;
         return (
-            <Modal trigger={<Button>Add Entry</Button>}>
+            <Modal trigger={<Button icon><Icon name='add'/></Button>}>
                 <Modal.Header>Add</Modal.Header>
                 <Form onSubmit={this.handleSubmit} success={success}>
                     <Message
@@ -56,7 +56,7 @@ class AddModal extends React.Component {
                         name="symbol"
                         onChange={this.handleChange}
                     />
-                    <Button type='submit'>Submit</Button>
+                    <Button type='submit' primary>Submit</Button>
                 </Form>
             </Modal>
         );
@@ -81,7 +81,7 @@ class EditModal extends React.Component {
     }
 
     handleChange = (e, { name, value }) => {
-        console.log(name, value)
+        console.log(name, value);
         this.setState({ [name]: value });
     };
 
@@ -140,7 +140,7 @@ class EditModal extends React.Component {
                         value={symbol}
                         onChange={this.handleChange}
                     />
-                    <Button type='submit'>Submit</Button>
+                    <Button type='submit' primary>Submit</Button>
                     <Button
                         type="button"
                         negative

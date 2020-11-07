@@ -88,7 +88,7 @@ class AdminTable extends React.Component {
         });
         return (
             <div>
-                <AddModal updateHandler={updateHandler}/>
+
                 <Table celled>
                     <Table.Header>
                         <Table.Row>
@@ -97,7 +97,7 @@ class AdminTable extends React.Component {
                             <Table.HeaderCell>Name</Table.HeaderCell>
                             {/*<Table.HeaderCell>Active</Table.HeaderCell>*/}
                             {/*<Table.HeaderCell>Tracked</Table.HeaderCell>*/}
-                            <Table.HeaderCell>Edit</Table.HeaderCell>
+                            <Table.HeaderCell><AddModal updateHandler={updateHandler}/></Table.HeaderCell>
                         </Table.Row>
                     </Table.Header>
                     <Table.Body>
