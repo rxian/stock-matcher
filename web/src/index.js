@@ -7,6 +7,9 @@ import Admin from './admin/Admin';
 import reportWebVitals from './reportWebVitals';
 import 'semantic-ui-css/semantic.min.css';
 import {Header, Icon} from "semantic-ui-react";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import { faDog } from "@fortawesome/free-solid-svg-icons";
+
 
 ReactDOM.render(
     <BrowserRouter>
@@ -24,7 +27,7 @@ function App() {
     return (
         <div className="App">
             <Header as='h1'>
-                <Icon name='pills'/>
+                <FontAwesomeIcon icon={faDog} />
                 Stock Matcher
             </Header>
             <StockSearch/>

@@ -27,13 +27,9 @@ code {
     .ui.header {
         text-align: center;
         height: 5em;
-        padding-top: 3em;
+        padding-top: 3.5em;
         font-size: 3em;
         color: $header-text-color;
-
-        display: flex;
-        justify-content: center;
-        align-items: flex-end;
         
         .icon {
             color: $header-icon-color;
