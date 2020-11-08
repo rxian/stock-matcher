@@ -1,5 +1,5 @@
 $header-text-color: #d6c9f8;
-$header-icon-color: #9c94f8;
+$header-icon-color: #7b8be2;
 
 body {
     margin: 0;
@@ -32,8 +32,13 @@ code {
         color: $header-text-color;
         
         .icon {
+
+        }
+
+        .svg-inline--fa {
             color: $header-icon-color;
-            font-size: 1.4em;
+            margin-right: 0.1em;
+            vertical-align: unset;
         }
     }
 }
