@@ -31,12 +31,11 @@ def get_historical_data(ticker, duration):
 
 # generate our dataset
 def generate_csv():
-    with open('stockData.csv', 'w', newline='') as file:
+    with open('stockDataF.csv', 'w', newline='') as file:
         fieldnames = ['symbol', 'date', 'open', 'close', 'high', 'low', 'volume']
         writer = csv.DictWriter(file, fieldnames=fieldnames)
-        for ticker in get_sp500_tickers():
-            time.sleep(1)
-            for i in range(0, len(get_historical_data(ticker, "3m"))):
+        for ticker in get_sp500_tickers()[0:10]:
+            for i in range(0, 5):
                 writer.writerow({
                     'symbol': ticker.lower(), 
                     'date': get_historical_data(ticker, "3m")[i]['date'],
@@ -46,5 +45,4 @@ def generate_csv():
                     'low': get_historical_data(ticker, "3m")[i]['low'],
                     'volume': get_historical_data(ticker, "3m")[i]['volume']
                 })
-
 generate_csv()
