@@ -3,8 +3,8 @@ import json
 import requests
 import spacy
 from spacy import displacy
-from collections import Counter
 import en_core_web_sm
+from generate_sp_500_list import sp_500_companies
 nlp = en_core_web_sm.load()
 
 endpoint = "https://newsapi.org/v2/top-headlines?language=en&country=us&"
