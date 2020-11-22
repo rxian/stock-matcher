@@ -6,8 +6,7 @@ from spacy import displacy
 import en_core_web_sm
 from generate_sp_500_list import sp_500_companies
 nlp = en_core_web_sm.load()
-
-endpoint = "https://newsapi.org/v2/top-headlines?language=en&country=us&"
+from credentials import endpoint
 
 # get the background content of the top business headlines of the day
 def get_articles():
@@ -34,7 +33,7 @@ def extract_orgs(description):
 # parameters:
 # content list -- The list of descriptions from the news of the day
 # return: a list of related companies for the day
-def news_related_companies(article_descriptions):
+def get_related_companies(article_descriptions):
     related_companies = []
     for desc in article_descriptions:
         # at each iteration, add a list of lists of related companies
