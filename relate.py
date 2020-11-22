@@ -34,10 +34,10 @@ def extract_orgs(description):
 # parameters:
 # content list -- The list of descriptions from the news of the day
 # return: a list of related companies for the day
-def news_related_tickers(article_descriptions):
-    related_tickers = []
+def news_related_companies(article_descriptions):
+    related_companies = []
     for desc in article_descriptions:
         # at each iteration, add a list of lists of related companies
-        related_tickers.append(extract_orgs(desc))
+        related_companies.append(extract_orgs(desc))
 
-    return related_tickers
+    return related_companies
