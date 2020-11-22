@@ -36,8 +36,8 @@ def extract_orgs(description):
 # return: a list of related companies for the day
 def news_related_tickers(article_descriptions):
     related_tickers = []
-    for i in range(0, len(article_descriptions)):
+    for desc in article_descriptions:
         # at each iteration, add a list of lists of related companies
-        related_tickers.append(extract_orgs)
+        related_tickers.append(extract_orgs(desc))
 
     return related_tickers
