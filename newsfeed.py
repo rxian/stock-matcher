@@ -25,7 +25,8 @@ def extract_orgs(description):
     tokens = nlp(description)
     companies = []
     for t in tokens.ents:
-        if t.label_ == 'ORG':
+        # make sure the relevant company is a publicly-traded company in the sp_500
+        if t.label_ == 'ORG' and t.text in sp_500_companies:
             companies.append(t.text)
 
     return companies
