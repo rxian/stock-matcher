@@ -32,9 +32,8 @@ def extract_orgs(description):
 
 # parameters:
 # content list -- The list of descriptions from the news of the day
-# sp_500_companies -- The sp_500 companies (detect tickers or company name)
 # return: a list of related companies for the day
-def news_related_tickers(article_descriptions, sp_500_companies):
+def news_related_tickers(article_descriptions):
     related_tickers = []
     for i in range(0, len(article_descriptions)):
         # at each iteration, add a list of lists of related companies
