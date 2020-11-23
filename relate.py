@@ -1,5 +1,5 @@
 from credentials import news_api_key
-import json 
+import json
 import requests
 import spacy
 from spacy import displacy

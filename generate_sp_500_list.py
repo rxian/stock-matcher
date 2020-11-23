@@ -2,6 +2,7 @@ import bs4 as bs
 import requests
 
 sp_500_companies = []
+ticker_company_name_dict = {}
 
 def generate():
     resp = requests.get('http://en.wikipedia.org/wiki/List_of_S%26P_500_companies')
@@ -13,9 +14,8 @@ def generate():
                         headers=headers)
 
     for row in table.findAll('tr')[1:]:
-        company = row.findAll('td')[1].text
-        sp_500_companies.append(company.replace("\n", ""))
+        ticker = row.findAll('td')[0].text.replace("\n", "")
+        company = row.findAll('td')[1].text.replace("\n", "")
+        sp_500_companies.append(company)
+        ticker_company_name_dict[ticker] = company
 
-    return sp_500_companies
-
-generate()
