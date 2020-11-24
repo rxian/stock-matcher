@@ -21,20 +21,16 @@ def generate():
 
 def preprocess(text):
     text = text.replace("\n", "")
+    text = text.replace(",", "")
+    text = text.replace(" .", "")
 
     text = text.replace(" Corp", "")
-    text = text.replace(" Corp.", "")
     text = text.replace(" Co", "")
-    text = text.replace(" Co.", "")
-    text = text.replace(" & Co.", "")
     text = text.replace(" & Co", "")
 
     text = text.replace(" Corporation", "")
 
-    text = text.replace(" Inc.", "")
-    text = text.replace(" ,Inc.", "")
     text = text.replace(" Inc", "")
-    text = text.replace(" ,Inc", "")
     
     text = text.replace(" Systems", "")
     text = text.replace(" Brands", "")
