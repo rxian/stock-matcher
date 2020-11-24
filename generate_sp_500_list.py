@@ -15,7 +15,37 @@ def generate():
 
     for row in table.findAll('tr')[1:]:
         ticker = row.findAll('td')[0].text.replace("\n", "")
-        company = row.findAll('td')[1].text.replace("\n", "")
+        company = preprocess(row.findAll('td')[1].text)
         sp_500_companies.append(company)
         ticker_company_name_dict[ticker] = company
 
+def preprocess(text):
+    text = text.replace("\n", "")
+
+    text = text.replace(" Corp", "")
+    text = text.replace(" Corp.", "")
+    text = text.replace(" Co", "")
+    text = text.replace(" Co.", "")
+    text = text.replace(" & Co.", "")
+    text = text.replace(" & Co", "")
+
+    text = text.replace(" Corporation", "")
+
+    text = text.replace(" Inc.", "")
+    text = text.replace(" ,Inc.", "")
+    text = text.replace(" Inc", "")
+    text = text.replace(" ,Inc", "")
+    
+    text = text.replace(" Systems", "")
+    text = text.replace(" Brands", "")
+    text = text.replace(" Companies", "")
+    text = text.replace(" Limited", "")
+   
+    text = text.replace(" (Class A)", "")
+    text = text.replace(" (Class C)", "")
+    text = text.replace(".com ", "")
+    text = text.replace(" plc", "")
+    text = text.replace(" Group", "")
+
+    return text
+    
