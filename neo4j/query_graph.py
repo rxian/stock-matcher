@@ -12,7 +12,7 @@ def query_num_connections(tx, company1, company2, schema):
 
 def query_num_connections_by_date(tx, company1, company2, schema, date):
     query = (
-        "WITH (datetime() - duration({years: $years, days: $days, months: $months})) AS dateRange "
+        "WITH (datetime() - duration({{years: $years, days: $days, months: $months}})) AS dateRange "
         "MATCH (a:Listing)-[:MENTIONED_IN]->(article:News)<-[:MENTIONED_IN]-(b:Listing) "
         "WHERE a.{attribute1} = $company1 AND b.{attribute2} = $company2 AND article.timestamp.epochSeconds >= dateRange.epochSeconds " 
         "RETURN count(*) AS Connections"
@@ -36,20 +36,20 @@ def query_connection_list(tx, company, attribute):
     query = (
         "MATCH (a:Listing)-[:MENTIONED_IN]->(:News)<-[:MENTIONED_IN]-(b:Listing) "
         "WHERE a.{id} = $company " 
-        "RETURN collect(b.symbol) AS Connections"
+        "RETURN collect(distinct b.symbol) AS Connections"
     ).format(id = attribute)
     return tx.run(query, company = company).single().value()
 
 def query_connection_list_by_date(tx, company, attribute, date):
     query = (
-        "WITH (datetime() - duration({years: $years, days: $days, months: $months})) AS dateRange "
+        "WITH (datetime() - duration({{years: $years, days: $days, months: $months}})) AS dateRange "
         "MATCH (a:Listing)-[:MENTIONED_IN]->(article:News)<-[:MENTIONED_IN]-(b:Listing) "
         "WHERE a.{id} = $company AND article.timestamp.epochSeconds >= dateRange.epochSeconds "
-        "RETURN collect(b.symbol) AS Connections"
+        "RETURN collect(distinct b.symbol) AS Connections"
     ).format(id = attribute)
     return tx.run(query, years = date["years"], days = date["days"], months = date["months"], company = company).single().value()
 
-def get_list_connections(company, attribute = 'name', date = None):
+def get_connection_list(company, attribute = 'name', date = None):
     # If company name is True, treat the parameter as a name (default), otherwise treat it as a symbol
 
     # date is None by defult (no date limit when querying), but if specified it is assumed to be in the format 
@@ -65,16 +65,16 @@ def query_url_list(tx, company, attribute):
     query = (
         "MATCH (a:Listing)-[:MENTIONED_IN]->(b:News) "
         "WHERE a.{id} = $company " 
-        "RETURN collect(b.url) AS URL_List"
+        "RETURN collect(distinct b.url) AS URL_List"
     ).format(id = attribute)
     return tx.run(query, company = company).single().value()
 
 def query_url_list_by_date(tx, company, attribute, date):
     query = (
-        "WITH (datetime() - duration({years: $years, days: $days, months: $months})) AS dateRange "
+        "WITH (datetime() - duration({{years: $years, days: $days, months: $months}})) AS dateRange "
         "MATCH (a:Listing)-[:MENTIONED_IN]->(b:News) "
-        "WHERE a.{id} = $company AND article.timestamp.epochSeconds >= dateRange.epochSeconds "
-        "RETURN collect(b.url) AS URL_List"
+        "WHERE a.{id} = $company AND b.timestamp.epochSeconds >= dateRange.epochSeconds "
+        "RETURN collect(distinct b.url) AS URL_List"
     ).format(id = attribute)
     return tx.run(query, years = date["years"], days = date["days"], months = date["months"], company = company).single().value()
 

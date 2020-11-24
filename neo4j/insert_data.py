@@ -2,7 +2,7 @@ from database import driver, GraphDatabase
 from generate_sp_500_list import ticker_company_name_dict
 
 def create_listing(tx, listing_id, listing_name, listing_symbol):
-    tx.run("MERGE (a:Listing {listing_id: $listing_id, $name: $listing_name, symbol: $listing_symbol})", listing_id = listing_id, listing_name = listing_name, listing_symbol = listing_symbol)
+    tx.run("MERGE (a:Listing {listing_id: $listing_id, name: $listing_name, symbol: $listing_symbol})", listing_id = listing_id, listing_name = listing_name, listing_symbol = listing_symbol)
     return
 
 def insert_listings():
@@ -18,7 +18,7 @@ def create_news(tx, url, title, company, timestamp):
         "MERGE (article:News {title: $title, url: $url, timestamp: datetime($timestamp)}) "
         "WITH article "
         "MATCH (a:Listing {name: $company}) "
-        "CREATE (a)-[:MENTIONED_IN]->(article)"
+        "MERGE (a)-[:MENTIONED_IN]->(article)"
     )
     tx.run(query, title = title, url = url, company = company, timestamp = timestamp)
     return
