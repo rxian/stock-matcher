@@ -1,14 +1,16 @@
 from flask import Blueprint, request, abort
 from flask import jsonify
 
-from database import mysql
-from utils import like_string, construct_results, check_json
+from database import connect_db
+from utils import construct_results, check_json
 
 bp = Blueprint('listings', __name__)
 
 import sys, pathlib
 sys.path.append(str((pathlib.Path(__file__).parents[0] / ".." / "sql").absolute()))
 import sqlalchemy, connection, queries
+
+import prices
 
 
 @bp.route('/', methods=['GET'])
@@ -153,7 +155,3 @@ def delete_listing(listing_id):
         "data": None
     }), 200
 
-
-def connect_db():
-    conn = mysql.connect()
-    return conn.cursor()
