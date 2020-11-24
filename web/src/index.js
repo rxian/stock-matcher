@@ -6,10 +6,9 @@ import StockSearch from './search/StockSearch';
 import Admin from './admin/Admin';
 import reportWebVitals from './reportWebVitals';
 import 'semantic-ui-css/semantic.min.css';
-import {Header, Icon} from "semantic-ui-react";
+import { Header } from "semantic-ui-react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import { faDog } from "@fortawesome/free-solid-svg-icons";
-
 
 ReactDOM.render(
     <BrowserRouter>
@@ -47,7 +46,7 @@ function Child() {
 
     return (
         <div>
-            <h3 style={{"text-align": "center", "color":"#d6c9f8"}}>This is the detail page for listing: {id}</h3>
+            <h3 style={{"textAlign": "center", "color":"#d6c9f8"}}>This is the detail page for listing: {id}</h3>
         </div>
     );
 }
