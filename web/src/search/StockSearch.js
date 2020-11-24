@@ -1,13 +1,13 @@
-import React from 'react';
-import {Search, SearchResult} from "semantic-ui-react";
-
+import React, { useState, useEffect } from 'react';
+import {Search} from "semantic-ui-react";
 import './StockSearch.scss';
 import API from '../api';
-import stockMarketImage from '../static/stock-market.png';
 import {Link} from "react-router-dom";
+import LineChart from "../chart/Chart";
 
+const startDate = "2013-02-08";
+const endDate = "2013-02-22";
 
-// TODO: try React hooks!
 class StockSearch extends React.Component {
     constructor(props) {
         super(props);
@@ -20,9 +20,7 @@ class StockSearch extends React.Component {
     }
 
     handleSearchChange = (e, data) => {
-        if (data.value === "") {
-            return;
-        }
+        if (data.value === "") return;
 
         this.setState({ loading: true });
 
@@ -31,10 +29,10 @@ class StockSearch extends React.Component {
                 keyword: data.value,
             }
         }).then(res => {
-                this.setState({
-                    loading: false,
-                    results: res.data['data'],
-                })
+            this.setState({
+                loading: false,
+                results: res.data['data'],
+            })
         }).catch((e) => {
             console.log(e);
             if (e.response.status === 404) {
@@ -46,38 +44,68 @@ class StockSearch extends React.Component {
         })
     };
 
+    resultRenderer = (item) => <CustomSearchResult
+        description={item.description}
+        title={item.title}
+        listingID={item.listing_id}
+    />;
+
     render() {
         const { loading, results } = this.state;
-
-        const data = processResult(results)
         return (
             <Search
                 loading={loading}
-                onResultSelect={(e, data) => console.log(data)}
-                resultRenderer={(item) => <SearchResult
-                    title={item.title}
-                    image={item.image}
-                    description={item.description}
-                    as={Link}
-                    to={`/listing/${item.listing_id}`}
-                />}
+                resultRenderer={this.resultRenderer}
                 onSearchChange={this.handleSearchChange}
-                results={data}
+                results={results.map((d) => ({
+                    key: d['listingID'],
+                    listing_id: d['listingID'],
+                    title: d['symbol'],
+                    description: d['name'],
+                }))}
             />
         )
     }
 }
 
-function processResult(data) {
-    return data.map((d) => {
-        return {
-            key: d['listingID'],
-            listing_id: d['listingID'],
-            title: d['symbol'],
-            description: d['name'],
-            image: stockMarketImage
-        }
-    });
+function CustomSearchResult({ title, description, listingID }) {
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        let isMounted = true; // NOTE: isMounted variable is used to avoid warnings when using React hook with async function.
+        API.get(`/api/listings/${listingID}/prices`, {
+            params: {
+                "start-date": startDate,
+                "end-date": endDate,
+            }
+        }).then((res) => {
+            if (!isMounted) return;
+            setData(res.data.data);
+        }).catch((e) => {
+            // console.log(e.response);
+        });
+        return () => { isMounted = false };
+    }, [listingID]);
+
+    return (
+        <Link to={`/listing/${listingID}`}>
+            <div key='image' className='image'>
+                {data.length === 0? null:
+                    <LineChart
+                        data={data.map(item => ({
+                            x: new Date(item.date),
+                            y: item.open,
+                        }))}
+                        height={42}
+                        width={70}/>
+                }
+            </div>
+            <div key='content' className='content'>
+                {title && <div className='title'>{title}</div>}
+                {description && <div className='description'>{description}</div>}
+            </div>
+        </Link>
+    );
 }
 
 export default StockSearch;
