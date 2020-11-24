@@ -2,6 +2,7 @@ import requests
 from credentials import endpoint, news_api_key
 import json
 import spacy
+from news import *
 from spacy import displacy
 import en_core_web_sm
 from generate_sp_500_list import sp_500_companies
@@ -61,3 +62,13 @@ def get_title(url):
             return articles[i]["title"]
     
     return "Not found"
+
+# return a list of news objects by using our scraped news feed
+def generate_news_list(article_descriptions):
+    news_list = []
+    
+    for description in article_descriptions:
+        news_list.append(News(description["url"]))
+    
+    return news_list
+
