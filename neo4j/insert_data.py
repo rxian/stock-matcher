@@ -13,20 +13,20 @@ def insert_listings():
             listing_id += 1
         return
 
-def create_news(tx, url, title, company):
+def create_news(tx, url, title, company, timestamp):
     query = (
-        "MERGE (article:News {title: $title, url: $url}) "
+        "MERGE (article:News {title: $title, url: $url, timestamp: datetime($timestamp)}) "
         "WITH article "
         "MATCH (a:Listing {name: $company}) "
         "CREATE (a)-[:MENTIONED_IN]->(article)"
     )
-    tx.run(query, title = title, url = url, company = company)
+    tx.run(query, title = title, url = url, company = company, timestamp = timestamp)
     return
 
 def insert_news(articles):
     with driver.session() as session:
         for article in articles:
             for company in article.mentioned_companies:
-                session.write_transaction(create_news, article.url, article.title, company)
+                session.write_transaction(create_news, article.url, article.title, company, article.timestamp)
         return
 

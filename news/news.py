@@ -1,14 +1,12 @@
 from relate import *
-from news_info import *
 
 class News:
-
-    def __init__(self, url, description, title, mentioned_companies):
+    def __init__(self, url, description, title, timestamp):
         # use URL as primary key
         self.url = url
-        self.title = get_title(url)
-        self.description = get_description(url)
+        self.title = title
+        self.description = description
         self.mentioned_companies = extract_orgs(description)
+        self.timestamp = timestamp
 
-    def __init__(self):
-        
+
