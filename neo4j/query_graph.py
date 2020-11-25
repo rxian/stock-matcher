@@ -1,8 +1,9 @@
 from database import driver, GraphDatabase
+from typing import Optional
 
 # In these queries, returning only the aggregation is easier to handle as returning anything else would result in an empty result when there is nothing to aggregate
 
-def query_num_connections(tx, company1, company2, schema, date):
+def query_num_connections(tx, company1: str, company2: str, schema: list, date: Optional[dict] = None) -> int:
     date_comparison = "AND article.timestamp.epochSeconds >= dateRange.epochSeconds "
     query = (
         "MATCH (a:Listing)-[:MENTIONED_IN]->(article:News)<-[:MENTIONED_IN]-(b:Listing) "
@@ -15,7 +16,7 @@ def query_num_connections(tx, company1, company2, schema, date):
         date_min = "WITH (datetime() - duration({years: $years, days: $days, months: $months})) AS dateRange "
         return tx.run(date_min + query, years = date["years"], days = date["days"], months = date["months"], company1 = company1, company2 = company2).single().value()
 
-def get_num_connections(company1, company2, schema = ['name', 'name'], date = None):
+def get_num_connections(company1: str, company2: str, schema: list = ['name', 'name'], date: Optional[dict] = None) -> int:
     # schema is a list of size 2 that specifies the attributes that identify the companies that are passed in (either through 'name' or 'symbol')
     # by default, it is set to identify both companies by name
 
@@ -25,7 +26,7 @@ def get_num_connections(company1, company2, schema = ['name', 'name'], date = No
     with driver.session() as session:
         return session.read_transaction(query_num_connections, company1, company2, schema, date)
 
-def query_connection_list(tx, company, attribute, date):
+def query_connection_list(tx, company: str, attribute: str, date: Optional[dict] = None) -> list:
     date_comparison = "AND article.timestamp.epochSeconds >= dateRange.epochSeconds "
     query = (
         "MATCH (a:Listing)-[:MENTIONED_IN]->(article:News)<-[:MENTIONED_IN]-(b:Listing) "
@@ -38,7 +39,7 @@ def query_connection_list(tx, company, attribute, date):
         date_min = "WITH (datetime() - duration({years: $years, days: $days, months: $months})) AS dateRange "
         return tx.run(date_min + query, years = date["years"], days = date["days"], months = date["months"], company = company).single().value()
 
-def get_connection_list(company, attribute = 'name', date = None):
+def get_connection_list(company: str, attribute: str = 'name', date: Optional[dict] = None) -> list:
     # If company name is True, treat the parameter as a name (default), otherwise treat it as a symbol
 
     # date is None by defult (no date limit when querying), but if specified it is assumed to be in the format 
@@ -47,7 +48,7 @@ def get_connection_list(company, attribute = 'name', date = None):
     with driver.session() as session:
         return session.read_transaction(query_connection_list, company, attribute, date)
 
-def query_url_list(tx, company, attribute, date):
+def query_url_list(tx, company: str, attribute: str, date: Optional[dict] = None) -> list:
     date_comparison = "AND article.timestamp.epochSeconds >= dateRange.epochSeconds "
     query = (
         "MATCH (a:Listing)-[:MENTIONED_IN]->(article:News) "
@@ -60,7 +61,7 @@ def query_url_list(tx, company, attribute, date):
         date_min = "WITH (datetime() - duration({years: $years, days: $days, months: $months})) AS dateRange "
         return tx.run(date_min + query, years = date["years"], days = date["days"], months = date["months"], company = company).single().value()
 
-def get_url_list(company, attribute = 'name', date = None):
+def get_url_list(company: str, attribute: str = 'name', date: Optional[dict] = None) -> list:
     # If company name is True, treat the parameter as a name (default), otherwise treat it as a symbol
 
     # date is None by defult (no date limit when querying), but if specified it is assumed to be in the format 
