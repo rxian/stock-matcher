@@ -1,6 +1,6 @@
 import React from 'react';
 import './Admin.scss';
-import {Search, Table, Icon} from 'semantic-ui-react';
+import {Table} from 'semantic-ui-react';
 import API from '../api';
 import {AddModal, EditModal} from "./Modal";
 
@@ -106,14 +106,6 @@ class AdminTable extends React.Component {
                 </Table>
             </div>
 
-        )
-    }
-}
-
-class EditSearch extends React.Component {
-    render() {
-        return (
-            <Search/>
         )
     }
 }
