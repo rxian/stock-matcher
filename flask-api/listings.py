@@ -2,7 +2,7 @@ from flask import Blueprint, request, abort
 from flask import jsonify
 
 from database import connect_db
-from utils import construct_results, check_json
+from utils import construct_results, check_json, construct_result
 
 bp = Blueprint('listings', __name__)
 
@@ -32,7 +32,7 @@ def get_listings():
         prefix = ''
 
     q = sqlalchemy.text("""
-        SELECT * FROM Listings WHERE symbol LIKE :x ORDER BY symbol""")
+        SELECT * FROM Listings WHERE symbol LIKE :x OR name LIKE :x ORDER BY symbol""")
 
     with connection.engine.connect() as conn:
         data = [dict(zip(r.keys(), r)) for r in conn.execute(q,x='%s%%' % prefix)]
@@ -64,7 +64,7 @@ def get_listing(listing_id):
 
     data = cursor.fetchone()
     return jsonify({
-        "data": construct_results(cursor, [data]),
+        "data": construct_result(cursor, data),
     }), 200
 
 
@@ -155,3 +155,57 @@ def delete_listing(listing_id):
         "data": None
     }), 200
 
+
+@bp.route('/<listing_id>/similar', methods=['GET'])
+def get_similar_trends(listing_id):
+    start_date = request.args.get('start-date')
+    end_date = request.args.get('end-date')
+    print(request.args.get('dtw'))
+    dtw = False if request.args.get('dtw') is None else request.args.get('dtw')
+
+    if dtw:
+        queries = [
+            {
+                "query": "CALL ComputeDTWDistances(%s,%s,%s,3)",
+                "parameters": [listing_id, start_date, end_date]
+            },
+            {
+                "query": "SELECT listingID, name, distance, symbol FROM Distances NATURAL JOIN Listings WHERE distance IS NOT NULL ORDER BY distance ASC LIMIT 5",
+                "parameters": []
+            }
+        ]
+    # elif start_date is None or end_date is None:
+    #     queries = [
+    #         {
+    #             "query": """
+    #                 SELECT IF(listingID1=%s,listingID2,listingID1) AS listingID, (SELECT name FROM Listings WHERE listingID=IF(listingID1=%s,listingID2,listingID1)) AS name, distance
+    #                 FROM Distances30
+    #                 WHERE listingID1=%s OR listingID2=%s
+    #                 ORDER BY distance ASC
+    #                 LIMIT 5""",
+    #             "parameters": [listing_id, listing_id, listing_id, listing_id]
+    #         }
+    #     ]
+    else:
+        queries = [
+            {
+                "query": "CALL ComputeDistances(%s,%s,%s)",
+                "parameters": [listing_id, start_date, end_date]
+            },
+            {
+                "query": "SELECT listingID, name, distance, symbol FROM Distances NATURAL JOIN Listings WHERE distance IS NOT NULL ORDER BY distance ASC LIMIT 5",
+                "parameters": []
+            }
+        ]
+
+    cursor = connect_db()
+    for q in queries:
+        cursor.execute(q['query'], tuple(q['parameters']))
+
+    if cursor.rowcount == 0:
+        abort(404, 'No data')
+
+    data = cursor.fetchall()
+    return jsonify({
+        "data": construct_results(cursor, data),
+    }), 200
