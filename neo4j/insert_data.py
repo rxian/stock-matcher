@@ -25,3 +25,4 @@ def insert_news(articles: list):
             for company in article.mentioned_companies:
                 session.write_transaction(create_news, article.url, article.title, company, article.timestamp)
 
+# pull news from here: https://www.nasdaq.com/feed/rssoutbound?symbol={REPLACE_WITH_STOCK_SYMBOL} and https://feeds.finance.yahoo.com/rss/2.0/headline?s={REPLACE_WITH_STOCK_SYMBOL}&region=US&lang=en-US
