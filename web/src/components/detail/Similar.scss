@@ -1,0 +1,40 @@
+@import '../variables';
+
+.Similar {
+    float: left;
+
+    .header {
+        display: inline;
+    }
+
+    .ui.loader {
+        margin: 20px auto;
+        position: relative;
+        top: unset;
+        left: unset;
+        transform: unset;
+    }
+
+    .ListingSummaryCard {
+        width: 30vw;
+        height: 15vh;
+
+        .image {
+            width: 20vw;
+
+            float: right;
+            overflow: hidden;
+            border-radius: .25em;
+        }
+
+        .content {
+            .title {
+                color: $detail-header-color;
+            }
+
+            .price {
+                color: $detail-header-color;
+            }
+        }
+    }
+}

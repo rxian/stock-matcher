@@ -1,6 +1,6 @@
 import React from "react";
 import {Button, Form, Icon, Message, Modal} from "semantic-ui-react";
-import API from "../api";
+import API from "../../api";
 import './Modal.scss';
 
 class AddModal extends React.Component {

@@ -1,7 +1,7 @@
 import React from 'react';
 import './Admin.scss';
 import {Table} from 'semantic-ui-react';
-import API from '../api';
+import API from '../../api';
 import {AddModal, EditModal} from "./Modal";
 
 class Admin extends React.Component{

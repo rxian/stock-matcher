@@ -1,0 +1,52 @@
+@import '../variables';
+
+.ListingDetail {
+    //background-color: #9c0609;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    padding: 0 20%;
+
+    .ui.header {
+        margin: unset;
+        padding: unset;
+        height: unset;
+
+        color: $detail-header-color;
+    }
+
+    .left {
+        //background-color: orange;
+
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+
+        .description {
+            color: $detail-header-color;
+            line-height: 1em; // NOTE: set line-height to 1em so that there is no extra space above and below the text
+        }
+    }
+
+    .right {
+        //background-color: cadetblue;
+
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+
+            width: 240px;
+
+            .label {
+                margin: 2px 1px;
+            }
+        }
+    }
+}
