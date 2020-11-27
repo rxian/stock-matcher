@@ -30,8 +30,8 @@ def query_connection_list(tx, company: int, limit: Optional[int] = None, date: O
     query = (
         "MATCH (a:Listing)-[:MENTIONED_IN]->(article:News)<-[:MENTIONED_IN]-(b:Listing) "
         "WHERE a.listing_id = $company {date_compare}"
-        "RETURN b.listing_id AS Listing_Id, b.symbol AS Symbol, count(distinct article.url) AS Connections "
-        "ORDER BY Connections DESC, b.listing_id{limit_query}"
+        "RETURN b.listing_id AS listing_id, b.symbol AS symbol, b.name AS name, count(distinct article.url) AS connections "
+        "ORDER BY connections DESC, b.listing_id{limit_query}"
     ).format(date_compare = "" if not date else date_comparison, limit_query = "" if not limit else limit_query)
     if not date:
         return list(tx.run(query, {"company": company, "n": limit}))
@@ -53,7 +53,7 @@ def query_article_list(tx, company: int, limit: Optional[int] = None, date: Opti
     query = (
         "MATCH (a:Listing)-[:MENTIONED_IN]->(article:News) "
         "WHERE a.listing_id = $company {date_compare}"
-        "RETURN article.title AS Title, article.url AS URL "
+        "RETURN article.title AS title, article.url AS url "
         "ORDER BY article.timestamp.epochSeconds DESC{limit_query}"
     ).format(date_compare = "" if not date else date_comparison, limit_query = "" if not limit else limit_query)
     if not date:
