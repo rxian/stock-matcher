@@ -5,7 +5,6 @@ from neo4j import GraphDatabase, basic_auth
 
 mysql = MySQL()
 
-# NOTE: Not used yet
 NEO4J_DATABASE_URL = os.environ['_NEO4J_DATABASE_URL']
 NEO4J_DATABASE_USERNAME = os.environ['_NEO4J_DATABASE_USERNAME']
 NEO4J_DATABASE_PASSWORD = os.environ['_NEO4J_DATABASE_PASSWORD']

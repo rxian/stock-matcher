@@ -1,5 +1,8 @@
-from database import driver, GraphDatabase
+# from database import driver, GraphDatabase
 from typing import Optional
+
+from database import driver
+
 
 def query_num_connections(tx, company1: int, company2: int, date: Optional[dict] = None) -> int:
     date_comparison = "AND article.timestamp.epochSeconds >= dateRange.epochSeconds "
@@ -31,7 +34,7 @@ def query_connection_list(tx, company: int, limit: Optional[int] = None, date: O
         "ORDER BY Connections DESC, b.listing_id{limit_query}"
     ).format(date_compare = "" if not date else date_comparison, limit_query = "" if not limit else limit_query)
     if not date:
-        return tx.run(query, company = company, n = limit).values()
+        return list(tx.run(query, {"company": company, "n": limit}))
     else:
         date_min = "WITH (datetime() - duration({years: $years, days: $days, months: $months})) AS dateRange "
         return tx.run(date_min + query, years = date["years"], days = date["days"], months = date["months"], company = company, n = limit).values()
@@ -41,7 +44,8 @@ def get_connection_list(company: int, limit: Optional[int] = None, date: Optiona
     # {"months": something, "days": something, "years": something} where each value in the
     # dict is a positive integer specifying how far back to look for relationships (subject to change)
     with driver.session() as session:
-        return session.read_transaction(query_connection_list, company, limit, date)
+        result = session.read_transaction(query_connection_list, company, limit, date)
+        return [dict(zip(r.keys(), r.values())) for r in result]
 
 def query_article_list(tx, company: int, limit: Optional[int] = None, date: Optional[dict] = None) -> list:
     date_comparison = "AND article.timestamp.epochSeconds >= dateRange.epochSeconds "
@@ -53,17 +57,19 @@ def query_article_list(tx, company: int, limit: Optional[int] = None, date: Opti
         "ORDER BY article.timestamp.epochSeconds DESC{limit_query}"
     ).format(date_compare = "" if not date else date_comparison, limit_query = "" if not limit else limit_query)
     if not date:
-        return tx.run(query, company = company, n = limit).values()
+        return list(tx.run(query, {"company": company, "n": limit}))
     else:
         date_min = "WITH (datetime() - duration({years: $years, days: $days, months: $months})) AS dateRange "
         return tx.run(date_min + query, years = date["years"], days = date["days"], months = date["months"], company = company, n = limit).values()
+
 
 def get_article_list(company: int, limit: Optional[int] = None, date: Optional[dict] = None) -> list:
     # date is None by defult (no date limit when querying), but if specified it is assumed to be in the format
     # {"months": something, "days": something, "years": something} where each value in the
     # dict is a positive integer specifying how far back to look for relationships (subject to change)
     with driver.session() as session:
-        return session.read_transaction(query_article_list, company, limit, date)
+        result = session.read_transaction(query_article_list, company, limit, date)
+        return [dict(zip(r.keys(), r.values())) for r in result]
 
 def query_similar_companies(tx, company: int, attribute: str, limit: Optional[int] = None) -> list:
     limit_query = " LIMIT $n"
