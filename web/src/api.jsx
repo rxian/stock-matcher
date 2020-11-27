@@ -6,5 +6,5 @@ const baseURL = process.env.REACT_APP_STAGE === 'development'
 
 export default axios.create({
     baseURL: baseURL,
-    timeout: 10000,
+    timeout: 60000,
 })

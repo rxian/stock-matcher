@@ -11,6 +11,8 @@ function ListingSummaryCard({ listingID,
                                 width,
                                 height,
                                 content,
+                                strokeColor,
+                                strokeWidth
                             }) {
     const [data, setData] = useState([]);
 
@@ -40,6 +42,8 @@ function ListingSummaryCard({ listingID,
                         height={height? height: 42}
                         width={width? width: 70}
                         normal
+                        strokeColor={strokeColor}
+                        strokeWidth={strokeWidth}
                     />
                 }
             </div>

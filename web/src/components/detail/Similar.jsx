@@ -7,7 +7,6 @@ import './Similar.scss';
 function Similar({ listingID, startDate, endDate }) {
     const [data, setData] = useState([]);
     const [useDTW, setUseDTW] = useState(false);
-    const [dataDTW, setDataDTW] = useState([]);
     const [loading, setLoading] = useState(false);
 
 

@@ -45,11 +45,13 @@ class StockSearch extends React.Component {
     resultRenderer = (item) =>
         <Link to={`/listing/${item.listing_id}`}>
             <ListingSummaryCard
-            description={item.description}
-            title={item.title}
-            listingID={item.listing_id}
-            startDate={defaultStartDate}
-            endDate={defaultEndDate}
+                description={item.description}
+                title={item.title}
+                listingID={item.listing_id}
+                startDate={defaultStartDate}
+                endDate={defaultEndDate}
+                strokeColor={"steelblue"}
+                strokeWidth={"1.5"}
             />
         </Link>;
 

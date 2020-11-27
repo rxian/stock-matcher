@@ -3,7 +3,7 @@ import * as d3 from 'd3';
 import './Chart.scss';
 import {useD3} from "../../hooks/useD3";
 
-function LineChart({ data, height, width, normal, axis }) {
+function LineChart({ data, height, width, normal, axis, strokeColor, strokeWidth }) {
     const ref = useD3(
         (svg) => {
             svg.selectAll("svg > *").remove();
@@ -35,8 +35,8 @@ function LineChart({ data, height, width, normal, axis }) {
                 .datum(data)
                 .attr("class", "line-graph")
                 .attr("fill", "none")
-                .attr("stroke", "#c6b74c")
-                .attr("stroke-width", 2.5)
+                .attr("stroke", strokeColor? strokeColor: "#c6b74c")
+                .attr("stroke-width", strokeWidth? strokeWidth: 2.5)
                 .attr("stroke-linejoin", "round")
                 .attr("stroke-linecap", "round")
                 .attr("d", line);
@@ -47,7 +47,8 @@ function LineChart({ data, height, width, normal, axis }) {
                     .attr("class", "xaxis axis")
                     .attr("transform", `translate(0, ${height - margin.bottom})`)
                     .call(d3.axisBottom(x)
-                        .tickValues(data.map(d => d.x))
+                        .ticks(width / 40)
+                        // .tickValues(data.map(d => d.x))
                         .tickSizeOuter(0)
                         .tickSizeInner(5)
                         .tickFormat(d3.timeFormat("%Y-%m-%d"))
