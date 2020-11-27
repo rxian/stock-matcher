@@ -1,7 +1,8 @@
 from flask import Blueprint, request, abort
 from flask import jsonify
 
-from database import connect_db
+from database import connect_db, driver
+from news_api import get_article_list, get_connection_list, query_article_list
 from utils import construct_results, check_json, construct_result
 
 bp = Blueprint('listings', __name__)
@@ -161,9 +162,10 @@ def get_similar_trends(listing_id):
     start_date = request.args.get('start-date')
     end_date = request.args.get('end-date')
     print(request.args.get('dtw'))
-    dtw = False if request.args.get('dtw') is None else request.args.get('dtw')
+    dtw = False if request.args.get('dtw') is None else False if request.args.get('dtw') == 'false' else True
+    print(dtw)
 
-    if dtw:
+    if dtw is True:
         queries = [
             {
                 "query": "CALL ComputeDTWDistances(%s,%s,%s,3)",
@@ -174,18 +176,43 @@ def get_similar_trends(listing_id):
                 "parameters": []
             }
         ]
-    # elif start_date is None or end_date is None:
-    #     queries = [
-    #         {
-    #             "query": """
-    #                 SELECT IF(listingID1=%s,listingID2,listingID1) AS listingID, (SELECT name FROM Listings WHERE listingID=IF(listingID1=%s,listingID2,listingID1)) AS name, distance
-    #                 FROM Distances30
-    #                 WHERE listingID1=%s OR listingID2=%s
-    #                 ORDER BY distance ASC
-    #                 LIMIT 5""",
-    #             "parameters": [listing_id, listing_id, listing_id, listing_id]
-    #         }
-    #     ]
+    elif start_date == '2020-11-10' and end_date == '2020-11-25':
+        # 2020-10-10
+        queries = [
+            {
+                "query": """
+                    SELECT IF(listingID1=%s,listingID2,listingID1) AS listingID, (SELECT name FROM Listings WHERE listingID=IF(listingID1=%s,listingID2,listingID1)) AS name, distance
+                    FROM Distances15
+                    WHERE listingID1=%s OR listingID2=%s
+                    ORDER BY distance ASC
+                    LIMIT 5""",
+                "parameters": [listing_id, listing_id, listing_id, listing_id]
+            }
+        ]
+    elif start_date == '2020-10-25' and end_date == '2020-11-25':
+        queries = [
+            {
+                "query": """
+                    SELECT IF(listingID1=%s,listingID2,listingID1) AS listingID, (SELECT name FROM Listings WHERE listingID=IF(listingID1=%s,listingID2,listingID1)) AS name, distance
+                    FROM Distances30
+                    WHERE listingID1=%s OR listingID2=%s
+                    ORDER BY distance ASC
+                    LIMIT 5""",
+                "parameters": [listing_id, listing_id, listing_id, listing_id]
+            }
+        ]
+    elif start_date == '2020-09-25' and end_date == '2020-11-25':
+        queries = [
+            {
+                "query": """
+                    SELECT IF(listingID1=%s,listingID2,listingID1) AS listingID, (SELECT name FROM Listings WHERE listingID=IF(listingID1=%s,listingID2,listingID1)) AS name, distance
+                    FROM Distances60
+                    WHERE listingID1=%s OR listingID2=%s
+                    ORDER BY distance ASC
+                    LIMIT 5""",
+                "parameters": [listing_id, listing_id, listing_id, listing_id]
+            }
+        ]
     else:
         queries = [
             {
@@ -208,4 +235,12 @@ def get_similar_trends(listing_id):
     data = cursor.fetchall()
     return jsonify({
         "data": construct_results(cursor, data),
+    }), 200
+
+
+@bp.route('/<listing_id>/mentioned-with', methods=['GET'])
+def get_mentioned_with(listing_id):
+    result = get_connection_list(int(listing_id), limit=5)
+    return jsonify({
+        "data": result
     }), 200
