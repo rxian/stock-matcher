@@ -1,4 +1,4 @@
-const defaultStartDate = "2020-05-26";
-const defaultEndDate = "2020-06-26";
+const defaultStartDate = "2020-10-25";
+const defaultEndDate = "2020-11-25";
 
 export {defaultStartDate, defaultEndDate};

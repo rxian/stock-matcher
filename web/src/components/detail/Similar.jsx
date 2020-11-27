@@ -31,12 +31,11 @@ function Similar({ listingID, startDate, endDate }) {
 
     const handleOnChange = (e, data) => {
         setUseDTW(data.checked);
-        fetchData();
     };
 
     useEffect(() => {
         fetchData();
-    }, [listingID, startDate, endDate]);
+    }, [listingID, startDate, endDate, useDTW]);
 
     const customCardContent = (title, companyName, score ) =>
         <div>
