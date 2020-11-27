@@ -1,8 +1,68 @@
 @import '../variables';
 
 .Detail {
+    padding: 20px;
 
-    .form > .field {
-        display: inline;
+    .ListingDetail {
+        margin-bottom: 30px;
+    }
+
+    .form {
+        margin-bottom: 10px;
+
+        .field {
+            display: inline;
+            margin-right: 30px;
+        }
+
+        label {
+            color: $options-bar-label-color !important;
+        }
+
+        input {
+            background-color: $options-bar-input-background-color !important;
+            color: $options-bar-text-color !important;
+        }
+
+        .button {
+            color: $options-button-text-color;
+            box-shadow: 0 0 0 2px $options-button-text-color inset!important
+        }
+    }
+
+    .ListingPriceChart {
+        margin-bottom: 50px;
+    }
+
+    .header-bar {
+        margin-bottom: 30px;
+    }
+    .header {
+        margin: unset;
+        color: $theme-purple;
+    }
+
+    .row {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+
+        .header {
+            line-height: unset;
+            font-size: 2.5em !important;
+        }
+
+        .Similar {
+            flex-basis: auto;
+            flex-grow: 1;
+
+            padding-right: 10px;
+        }
+
+        .Mentions {
+            flex-grow: 2;
+
+            padding-left: 10px;
+        }
     }
 }

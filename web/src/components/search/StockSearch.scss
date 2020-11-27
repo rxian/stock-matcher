@@ -1,4 +1,7 @@
 .ui.search {
+    width: 25em;
+    margin: 1em auto;
+
     .ui.input {
         width: 100%;
     }
@@ -16,6 +19,11 @@
         .prompt {
             border-radius: 1.4rem 1.4rem .5rem .5rem/1.4rem 1.4rem .5rem .5rem !important;
         }
+    }
+
+    .chart {
+        background-color: aliceblue;
+        border-radius: .25em
     }
 }
 

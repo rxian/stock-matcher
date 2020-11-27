@@ -9,7 +9,9 @@ function ListingSummaryCard({ listingID,
                                 startDate,
                                 endDate,
                                 width,
-                                height }) {
+                                height,
+                                content,
+                            }) {
     const [data, setData] = useState([]);
 
     useEffect(() => {
@@ -42,9 +44,13 @@ function ListingSummaryCard({ listingID,
                 }
             </div>
             <div key='content' className='content'>
-                {title && <div className='title'>{title}</div>}
-                {description && <div className='description'>{description}</div>}
-                {price && data.length !== 0 && <div className='price'>{data[data.length-1].close.toFixed(2)}</div>}
+                {
+                    content? content: <div>
+                        { title && <div className='title'>{title}</div> }
+                        { description && <div className='description'>{description}</div> }
+                    </div>
+                }
+                { price && data.length !== 0 && <div className='price'>${data[data.length-1].close.toFixed(2)}</div> }
             </div>
         </div>
     );

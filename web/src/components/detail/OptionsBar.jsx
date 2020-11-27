@@ -41,7 +41,7 @@ function OptionsBar({ handleUpdateOptions }) {
                 onChange={(e, { value }) => setEndDate(value)}
             />
         </Form.Field>
-        <Button type='submit'>Submit</Button>
+        <Button type='submit' inverted>Submit</Button>
     </Form>
 }
 

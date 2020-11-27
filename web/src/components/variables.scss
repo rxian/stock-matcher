@@ -1,3 +1,20 @@
-$detail-header-color: #7b8be2;
+$theme-purple: #7b8be2;
+$theme-light-purple: #d6c9f8;
+$theme-dark-blue: #27303d;
+$theme-light-blue: lightsteelblue;
 
-$chart-background-color: aliceblue;
+$listing-detail-header-color: $theme-light-purple;
+$listing-detail-description-color: $theme-purple;
+
+$chart-background-color: #27303d;
+$chart-text-color: #496392;
+$chart-axis-color: #496392;
+
+$options-bar-label-color: #7b8be2;
+$options-bar-input-background-color: #27303d;
+$options-bar-text-color: #7b8be2;
+$options-button-text-color: #7b8be2;
+$options-button-color: #7b8be2;
+
+$similar-card-header: $theme-light-purple;
+$similar-card-text: $theme-light-blue;

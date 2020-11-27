@@ -14,24 +14,20 @@ function Similar({ listingID, startDate, endDate }) {
     const fetchData = () => {
         setLoading(true);
 
-        API.get(`/api/listings/${listingID}/similar`, {
-            params: {
-                "start-date": startDate,
-                "end-date": endDate,
-                "dtw": useDTW,
-            }
-        }).then((res) => {
-            if (useDTW) {
-                setData(res.data.data);
-            } else {
-                setData(res.data.data);
-            }
-
-            setLoading(false);
-        }).catch((e) => {
-            setData([]);
-            setLoading(false);
-        });
+        API
+            .get(`/api/listings/${listingID}/similar`, {
+                params: {
+                    "start-date": startDate,
+                    "end-date": endDate,
+                    "dtw": useDTW,
+                }
+            })
+            .then((res) => {
+                if (useDTW) setData(res.data.data);
+                else setData(res.data.data);
+            })
+            .catch((e) => { setData([]); })
+            .finally(() => setLoading(false));
     };
 
     const handleOnChange = (e, data) => {
@@ -43,6 +39,13 @@ function Similar({ listingID, startDate, endDate }) {
         fetchData();
     }, [listingID, startDate, endDate]);
 
+    const customCardContent = (title, companyName, score ) =>
+        <div>
+            { title && <div className='title'>{title}</div> }
+            { companyName && <div className='description'>{companyName}</div> }
+            { score && <div> Score: { score.toFixed(2) }</div> }
+        </div>;
+
     const content = data.length === 0? <p>No data</p>:
         data.map((item, i) =>
             <ListingSummaryCard key={i}
@@ -53,14 +56,17 @@ function Similar({ listingID, startDate, endDate }) {
                                 height={100}
                                 startDate={startDate}
                                 endDate={endDate}
+                                content={customCardContent(item.symbol, item.name, item.distance)}
             />);
 
     return (
         <div className="Similar">
-            <Header as="h3">
-                Similar Trends
+            <div className="header-bar">
+                <Header>
+                    Similar Trends
+                </Header>
                 <Checkbox label='DTW' onChange={handleOnChange}/>
-            </Header>
+            </div>
             { loading? <Loader active/>: content }
         </div>
     );

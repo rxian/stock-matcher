@@ -2,5 +2,18 @@
 
 .chart {
     background-color: $chart-background-color;
-    border-radius: .25em
+    border-radius: .4em;
+
+    text {
+        color: $chart-text-color;
+        font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+    }
+
+    .axis {
+        color: $chart-axis-color;
+    }
+
+    .line-graph {
+        background-color: #14800d;
+    }
 }

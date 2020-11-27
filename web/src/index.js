@@ -26,7 +26,7 @@ ReactDOM.render(
 function App() {
     return (
         <div className="App">
-            <Header as='h1'>
+            <Header as='h1' className="main-header">
                 <FontAwesomeIcon icon={faDog} />
                 Stock Matcher
             </Header>

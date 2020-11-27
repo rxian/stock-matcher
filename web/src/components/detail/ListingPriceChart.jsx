@@ -9,18 +9,16 @@ function ListingPriceChart({ listingID, startDate, endDate }) {
 
     useEffect(() => {
         setLoading(true);
-        API.get(`/api/listings/${listingID}/prices`, {
-            params: {
-                "start-date": startDate,
-                "end-date": endDate,
-            }
-        }).then((res) => {
-            setData(res.data.data);
-            setLoading(false);
-        }).catch((e) => {
-            setData([]);
-            setLoading(false);
-        });
+        API
+            .get(`/api/listings/${listingID}/prices`, {
+                params: {
+                    "start-date": startDate,
+                    "end-date": endDate,
+                }
+            })
+            .then(res => { setData(res.data.data); })
+            .catch((e) => { setData([]); })
+            .finally(() => setLoading(false));
     }, [listingID, startDate, endDate]);
 
     const content = data.length === 0? <p>No data</p>:
@@ -33,6 +31,7 @@ function ListingPriceChart({ listingID, startDate, endDate }) {
             width={822}
             axis
         />);
+
     return (
         <div className="ListingPriceChart">
             {

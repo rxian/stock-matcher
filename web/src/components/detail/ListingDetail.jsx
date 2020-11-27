@@ -39,7 +39,7 @@ function ListingDetail({ listingID, date }) {
             <div className="right">
                 <Header as="h1"> {priceData.length !== 0? priceData.close.toFixed(2): null}</Header>
                 <div className="tags">
-                    {label.map(l => <Label size="tiny" color="teal" key={l}> {l} </Label>)}
+                    {label.map(l => <Label size="tiny" key={l}> {l} </Label>)}
                 </div>
             </div>
         </div>

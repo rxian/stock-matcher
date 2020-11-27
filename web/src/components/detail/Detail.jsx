@@ -6,6 +6,7 @@ import ListingPriceChart from "./ListingPriceChart";
 import Similar from "./Similar";
 import {defaultEndDate, defaultStartDate} from "../../static/hardCodeConfig";
 import OptionsBar from "./OptionsBar";
+import Mentions from "./Mentions";
 
 class Detail extends React.Component {
     constructor(props) {
@@ -30,7 +31,10 @@ class Detail extends React.Component {
                 <ListingDetail listingID={id} date={endDate}/>
                 <OptionsBar handleUpdateOptions={this.updateOptions}/>
                 <ListingPriceChart listingID={id} startDate={startDate} endDate={endDate}/>
-                <Similar listingID={id} startDate={startDate} endDate={endDate}/>
+                <div className="row">
+                    <Similar listingID={id} startDate={startDate} endDate={endDate}/>
+                    <Mentions listingID={id}/>
+                </div>
             </div>
         );
     }

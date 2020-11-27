@@ -33,6 +33,7 @@ function LineChart({ data, height, width, normal, axis }) {
 
             svg.append("path")
                 .datum(data)
+                .attr("class", "line-graph")
                 .attr("fill", "none")
                 .attr("stroke", "steelblue")
                 .attr("stroke-width", 1.5)
@@ -46,7 +47,7 @@ function LineChart({ data, height, width, normal, axis }) {
             // axes
             if (axis) {
                 const xAxis = g => g
-                    .attr("class", "xaxis")
+                    .attr("class", "xaxis axis")
                     .attr("transform", `translate(0, ${height - margin.bottom})`)
                     .call(d3.axisBottom(x)
                         .tickValues(data.map(d => d.x))
@@ -56,6 +57,7 @@ function LineChart({ data, height, width, normal, axis }) {
                     );
 
                 const yAxis = g => g
+                    .attr("class", "yaxis axis")
                     .attr("transform", `translate(${margin.left}, 0)`)
                     .call(d3.axisLeft(y))
                     .call(g => g.select(".domain").remove())
