@@ -17,7 +17,9 @@ code {
 }
 
 .App {
-    padding: 1vh 18vw;
+    padding: 1vh 1vw;
+    max-width: 1000pt;
+    margin: auto;
 
     .main-header {
         text-align: center;

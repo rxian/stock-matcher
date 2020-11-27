@@ -6,7 +6,9 @@
     align-items: flex-start;
     flex-wrap: wrap;
 
-    padding: 20px 25%;
+    padding: 20px 10%;
+    max-width: 800px;
+    margin: auto;
 
     border-radius: .5em;
 
@@ -48,7 +50,7 @@
 
             .label {
                 margin: 2px 1px;
-                background-color: $theme-light-blue;
+                background-color: $listing-detail-label-color;
             }
         }
     }

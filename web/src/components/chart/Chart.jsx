@@ -35,14 +35,11 @@ function LineChart({ data, height, width, normal, axis }) {
                 .datum(data)
                 .attr("class", "line-graph")
                 .attr("fill", "none")
-                .attr("stroke", "steelblue")
-                .attr("stroke-width", 1.5)
+                .attr("stroke", "#c6b74c")
+                .attr("stroke-width", 2.5)
                 .attr("stroke-linejoin", "round")
                 .attr("stroke-linecap", "round")
                 .attr("d", line);
-
-            // svg.exit().remove();
-
 
             // axes
             if (axis) {
