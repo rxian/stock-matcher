@@ -114,3 +114,14 @@ def get_industry_sector_total_market_cap(attribute: str = "sector", limit: Optio
     with driver.session() as session:
         return session.read_transaction(query_industry_sector_total_market_cap, attribute, limit)
 
+
+def query_company_sector_industry(tx, company: int) -> list:
+    query = (
+        "MATCH (a:Listing {listing_id: $company}) "
+        "RETURN a.sector AS Sector, a.industry AS Industry"
+    )
+    return tx.run(query, company = company).values()[0]
+
+def get_company_sector_industry(company: int) -> list:
+    with driver.session() as session:
+        return session.read_transaction(query_company_sector_industry, company)

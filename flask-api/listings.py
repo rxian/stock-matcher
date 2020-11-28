@@ -2,7 +2,7 @@ from flask import Blueprint, request, abort
 from flask import jsonify
 
 from database import connect_db, driver
-from news_api import get_article_list, get_connection_list, query_article_list
+from news_api import get_article_list, get_connection_list, query_article_list, get_company_sector_industry
 from utils import construct_results, check_json, construct_result
 
 bp = Blueprint('listings', __name__)
@@ -64,8 +64,12 @@ def get_listing(listing_id):
         abort(404, 'Listing with id=%s does not exist' % (listing_id,))
 
     data = cursor.fetchone()
+    data_tags = get_company_sector_industry(int(listing_id))
+
+    result = construct_result(cursor, data)
+    result['tags'] = data_tags
     return jsonify({
-        "data": construct_result(cursor, data),
+        "data": result,
     }), 200
 
 
