@@ -51,7 +51,7 @@ class StockSearch extends React.Component {
                 startDate={defaultStartDate}
                 endDate={defaultEndDate}
                 strokeColor={"steelblue"}
-                strokeWidth={"1.5"}
+                strokeWidth={"1.2"}
             />
         </Link>;
 

@@ -3,6 +3,7 @@ import API from "../../api";
 import {Checkbox, Header, Loader } from "semantic-ui-react";
 import ListingSummaryCard from "../listingSummary/ListingSummaryCard";
 import './Similar.scss';
+import {Link} from "react-router-dom";
 
 function Similar({ listingID, startDate, endDate }) {
     const [data, setData] = useState([]);
@@ -37,9 +38,9 @@ function Similar({ listingID, startDate, endDate }) {
         fetchData();
     }, [listingID, startDate, endDate, useDTW]);
 
-    const customCardContent = (title, companyName, score ) =>
+    const customCardContent = (title, companyName, score, listingID ) =>
         <div>
-            { title && <div className='title'>{title}</div> }
+            { <Link to={`/listing/${listingID}`}><div className='title'>{title}</div></Link> }
             { companyName && <div className='description'>{companyName}</div> }
             { score && <div> Score: { score.toFixed(2) }</div> }
         </div>;
@@ -54,13 +55,14 @@ function Similar({ listingID, startDate, endDate }) {
                                 height={100}
                                 startDate={startDate}
                                 endDate={endDate}
-                                content={customCardContent(item.symbol, item.name, item.distance)}
+                                strokeWidth={2}
+                                content={customCardContent(item.symbol, item.name, item.distance, item.listingID)}
             />);
 
     return (
         <div className="Similar">
             <div className="header-bar">
-                <Header>
+                <Header as="h1">
                     Similar Trends
                 </Header>
                 <Checkbox label='DTW' onChange={handleOnChange}/>

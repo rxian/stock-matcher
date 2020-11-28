@@ -17,6 +17,10 @@
 
         label {
             color: $options-bar-label-color !important;
+
+            &:after {
+                color: #f4da32 !important;
+            }
         }
 
         input {
@@ -35,11 +39,27 @@
     }
 
     .header-bar {
-        margin-bottom: 30px;
+        margin-bottom: 20px;
+
+        h1, h3 {
+            display: table-cell;
+            vertical-align: bottom;
+        }
     }
     .header {
-        margin: unset;
+        margin: unset !important;
         color: $detail-header;
+    }
+
+    .labels {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+
+        .label {
+            margin: 2px 1px;
+            background-color: $listing-detail-label-color;
+        }
     }
 
     .row {
@@ -47,22 +67,30 @@
         justify-content: space-between;
         flex-wrap: wrap;
 
-        .header {
-            line-height: unset;
+        h1 {
             font-size: 2.5em !important;
         }
 
-        .Similar {
-            flex-basis: auto;
-            flex-grow: 1;
-
-            padding-right: 10px;
+        h1, h3 {
+            height: 3rem;
         }
 
-        .Mentions {
-            flex-grow: 2;
+        .Similar {
+            flex-basis: 45%;
+            flex-grow: 1;
+        }
 
-            padding-left: 10px;
+        .space {
+            flex-basis: 5%
+        }
+
+        .column {
+            flex-basis: 45%;
+            flex-grow: 1;
+        }
+
+        .MentionedWith {
+            margin-bottom: 30px;
         }
     }
 }

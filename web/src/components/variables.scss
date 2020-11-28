@@ -1,8 +1,9 @@
 $theme-purple: #7b8be2;
 $theme-light-purple: #d6c9f8;
-$theme-dark-blue: #2d354d;
+$theme-dark-blue: #2b3346;
 $theme-light-blue: lightsteelblue;
 $theme-grey-blue: #7191bd;
+$theme-blue: steelblue;
 
 $listing-detail-header-color: $theme-light-purple;
 $listing-detail-description-color: $theme-purple;
@@ -18,9 +19,12 @@ $options-bar-text-color: #7b8be2;
 $options-button-text-color: #7b8be2;
 $options-button-color: #7b8be2;
 
-$detail-header: $theme-light-purple;
+$detail-header: $theme-light-blue;
 
-$similar-card-header: $theme-light-purple;
-$similar-card-text: $theme-purple;
+$similar-checkbox-background-color: $theme-dark-blue;
+$similar-checkbox-color: $theme-light-blue;
+$similar-card-header: $theme-light-blue;
+$similar-card-text: $theme-blue;
 
-$color: #c6b74c;
+$mentioned-in-text-color: #719dca;
+$mentioned-in-date-color: steelblue;

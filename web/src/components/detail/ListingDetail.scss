@@ -42,16 +42,5 @@
         display: flex;
         flex-direction: column;
         align-items: flex-end;
-
-        .tags {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: flex-end;
-
-            .label {
-                margin: 2px 1px;
-                background-color: $listing-detail-label-color;
-            }
-        }
     }
 }

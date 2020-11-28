@@ -1,0 +1,14 @@
+.MentionedWith{
+    .labels {
+        justify-content: flex-start;
+
+        .label {
+            margin: 0px 3px 3px 0px;
+        }
+    }
+
+    .mentioned-with-company {
+        margin-right: 6px;
+        width: 100%;
+    }
+}
