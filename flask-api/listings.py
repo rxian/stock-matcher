@@ -100,7 +100,6 @@ def create_listing():
     active = req['active'] if 'active' in req else None
     tracked = req['tracked'] if 'tracked' in req else None
 
-    print(symbol, name, active, tracked)
     queries.insertValues('Listings',(symbol,name,active,tracked),schema=('symbol','name','active','tracked'))
 
     return jsonify({
@@ -165,9 +164,7 @@ def delete_listing(listing_id):
 def get_similar_trends(listing_id):
     start_date = request.args.get('start-date')
     end_date = request.args.get('end-date')
-    print(request.args.get('dtw'))
     dtw = False if request.args.get('dtw') is None else False if request.args.get('dtw') == 'false' else True
-    print(dtw)
 
     if dtw is True:
         queries = [
