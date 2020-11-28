@@ -8,6 +8,8 @@
 
     .results {
         width: 100% !important;
+        height: 60vh;
+        overflow-y: scroll;
     }
 
     .prompt {

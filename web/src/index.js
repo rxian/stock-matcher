@@ -28,7 +28,7 @@ function App() {
         <div className="App">
             <Header as='h1' className="main-header">
                 <FontAwesomeIcon icon={faDog} />
-                Stock Matcher
+                Fetch Stonk
             </Header>
             <StockSearch/>
             <Switch>
