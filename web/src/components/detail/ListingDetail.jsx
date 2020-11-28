@@ -7,9 +7,6 @@ function ListingDetail({ listingID, date }) {
     const [detailData, setDetailData] = useState([]);
     const [priceData, setPriceData] = useState([]);
 
-    const label = ["Technology", "Platform", "Hardware",
-        "Cell Phone", "Tablet", "Digital Wellbeing", "Efficiency"];
-
     useEffect(() => {
         API.get(`/api/listings/${listingID}`, {
         }).then( res => {
@@ -38,9 +35,11 @@ function ListingDetail({ listingID, date }) {
             }
             <div className="right">
                 <Header as="h1"> {priceData.length !== 0? priceData.close.toFixed(2): null}</Header>
-                <div className="labels">
-                    {label.map(l => <Label size="tiny" key={l}> {l} </Label>)}
-                </div>
+                {detailData['tags'] &&
+                    <div className="labels">
+                        {detailData['tags'].map(l => <Label size="tiny" key={l}> {l} </Label>)}
+                    </div>
+                }
             </div>
         </div>
     );
