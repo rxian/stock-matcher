@@ -53,7 +53,7 @@ def query_article_list(tx, company: int, limit: Optional[int] = None, date: Opti
     query = (
         "MATCH (a:Listing)-[:MENTIONED_IN]->(article:News) "
         "WHERE a.listing_id = $company {date_compare}"
-        "RETURN article.title AS title, article.url AS url "
+        "RETURN article.title AS title, article.url AS url, toString(date(article.timestamp)) AS date "
         "ORDER BY article.timestamp.epochSeconds DESC{limit_query}"
     ).format(date_compare = "" if not date else date_comparison, limit_query = "" if not limit else limit_query)
     if not date:

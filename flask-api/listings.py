@@ -181,36 +181,39 @@ def get_similar_trends(listing_id):
         queries = [
             {
                 "query": """
-                    SELECT IF(listingID1=%s,listingID2,listingID1) AS listingID, (SELECT name FROM Listings WHERE listingID=IF(listingID1=%s,listingID2,listingID1)) AS name, distance
+                    SELECT listingID, name, symbol, distance 
+                    FROM (SELECT IF(listingID1=%s,listingID2,listingID1) AS listingID, distance
                     FROM Distances15
                     WHERE listingID1=%s OR listingID2=%s
                     ORDER BY distance ASC
-                    LIMIT 5""",
-                "parameters": [listing_id, listing_id, listing_id, listing_id]
+                    LIMIT 5) t NATURAL JOIN Listings""",
+                "parameters": [listing_id, listing_id, listing_id]
             }
         ]
     elif start_date == '2020-10-25' and end_date == '2020-11-25':
         queries = [
             {
                 "query": """
-                    SELECT IF(listingID1=%s,listingID2,listingID1) AS listingID, (SELECT name FROM Listings WHERE listingID=IF(listingID1=%s,listingID2,listingID1)) AS name, distance
+                    SELECT listingID, name, symbol, distance 
+                    FROM (SELECT IF(listingID1=%s,listingID2,listingID1) AS listingID, distance
                     FROM Distances30
                     WHERE listingID1=%s OR listingID2=%s
                     ORDER BY distance ASC
-                    LIMIT 5""",
-                "parameters": [listing_id, listing_id, listing_id, listing_id]
+                    LIMIT 5) t NATURAL JOIN Listings""",
+                "parameters": [listing_id, listing_id, listing_id]
             }
         ]
     elif start_date == '2020-09-25' and end_date == '2020-11-25':
         queries = [
             {
                 "query": """
-                    SELECT IF(listingID1=%s,listingID2,listingID1) AS listingID, (SELECT name FROM Listings WHERE listingID=IF(listingID1=%s,listingID2,listingID1)) AS name, distance
-                    FROM Distances60
+                    SELECT listingID, name, symbol, distance 
+                    FROM (SELECT IF(listingID1=%s,listingID2,listingID1) AS listingID, distance
+                    FROM Distances15
                     WHERE listingID1=%s OR listingID2=%s
                     ORDER BY distance ASC
-                    LIMIT 5""",
-                "parameters": [listing_id, listing_id, listing_id, listing_id]
+                    LIMIT 5) t NATURAL JOIN Listings""",
+                "parameters": [listing_id, listing_id, listing_id]
             }
         ]
     else:
