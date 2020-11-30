@@ -14,7 +14,6 @@ app.register_blueprint(news.bp, url_prefix="/api/news")
 
 CORS(app)
 # app.config['CORS_HEADERS'] = 'Content-Type'
-
 mysql.init_app(app)
 
 if __name__ == "__main__":

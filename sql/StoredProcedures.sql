@@ -172,3 +172,18 @@ BEGIN
     SET distance = distance / LEAST(p, t.l);
 
 END;
+
+
+-- CALL GetTradingDates('2020-05-30','2020-11-25');
+
+-- DROP TEMPORARY TABLE IF EXISTS TradingDates1;
+-- CREATE TEMPORARY TABLE TradingDates1 
+-- SELECT date, CAST(ROW_NUMBER() OVER (ORDER BY date DESC) AS SIGNED) AS idx
+-- FROM TradingDates;
+
+-- SELECT * FROM TradingDates1;
+
+-- CALL ComputeAllPairsDistances('2020-09-02','2020-11-25')
+
+-- INSERT INTO Distances60
+-- SELECT * FROM AllPairsDistances;
