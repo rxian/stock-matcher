@@ -20,3 +20,6 @@ class News:
     def get_timestamp(self) -> str:
         return self.timestamp
 
+    def get_url(self) -> str:
+        return self.url
+
