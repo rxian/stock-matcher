@@ -10,16 +10,19 @@ def like_string(s):
     return s + "%"
 
 
+def construct_result(cursor, data):
+    fields = [c[0] for c in cursor.description]
+    return dict(zip(fields, data))
+
+
 def construct_results(cursor, data):
     """
-
     :param cursor:
     :param data:
     :return:
     """
     fields = [c[0] for c in cursor.description]
-    results = [dict(zip(fields, row)) for row in data]
-    return results
+    return [dict(zip(fields, row)) for row in data]
 
 
 def check_json(json, keys):

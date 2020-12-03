@@ -17,28 +17,25 @@ code {
 }
 
 .App {
-    margin: 1em 10em;
+    padding: 1vh 1vw;
+    max-width: 1000pt;
+    margin: auto;
 
-    .ui.search {
-        width: 25em;
-        margin: 1em auto;
-    }
-
-    .ui.header {
+    .main-header {
         text-align: center;
-        height: 5em;
-        padding-top: 3.5em;
-        font-size: 3em;
-        color: $header-text-color;
-        
-        .icon {
-
-        }
+        height: 5em !important;
+        padding-top: 3.5em !important;
+        font-size: 3em !important;
+        color: $header-text-color !important;
 
         .svg-inline--fa {
             color: $header-icon-color;
             margin-right: 0.1em;
             vertical-align: unset;
         }
+    }
+
+    .Detail {
+        margin-top: 5vh;
     }
 }

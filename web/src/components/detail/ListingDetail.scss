@@ -1,0 +1,46 @@
+@import '../variables';
+
+.ListingDetail {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+
+    padding: 20px 10%;
+    max-width: 800px;
+    margin: auto;
+
+    border-radius: .5em;
+
+    .left {
+        flex-grow: 1;
+        margin-right: 15%;
+    }
+
+    .right {
+        flex-grow: 1;
+        flex-basis: 240px;
+    }
+
+    .ui.header {
+        color: $listing-detail-header-color;
+        font-size: 3.2em;
+    }
+
+    .left {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+
+        .description {
+            color: $listing-detail-description-color;
+            line-height: 1em; // NOTE: set line-height to 1em so that there is no extra space above and below the text
+        }
+    }
+
+    .right {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+    }
+}

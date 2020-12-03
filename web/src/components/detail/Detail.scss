@@ -1,0 +1,96 @@
+@import '../variables';
+
+.Detail {
+    padding: 20px;
+
+    .ListingDetail {
+        margin-bottom: 30px;
+    }
+
+    .form {
+        margin-bottom: 10px;
+
+        .field {
+            display: inline;
+            margin-right: 30px;
+        }
+
+        label {
+            color: $options-bar-label-color !important;
+
+            &:after {
+                color: #f4da32 !important;
+            }
+        }
+
+        input {
+            background-color: $options-bar-input-background-color !important;
+            color: $options-bar-text-color !important;
+        }
+
+        .button {
+            color: $options-button-text-color;
+            box-shadow: 0 0 0 2px $options-button-text-color inset!important
+        }
+    }
+
+    .ListingPriceChart {
+        margin-bottom: 50px;
+    }
+
+    .header-bar {
+        margin-bottom: 20px;
+
+        h1, h3 {
+            display: table-cell;
+            vertical-align: bottom;
+        }
+    }
+    .header {
+        margin: unset !important;
+        color: $detail-header;
+    }
+
+    .labels {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+
+        .label {
+            margin: 2px 1px;
+            background-color: $listing-detail-label-color;
+        }
+    }
+
+    .row {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+
+        h1 {
+            font-size: 2.5em !important;
+        }
+
+        h1, h3 {
+            height: 3rem;
+        }
+
+        .Similar {
+            flex-basis: 45%;
+            flex-grow: 1;
+        }
+
+        .space {
+            flex-basis: 5%
+        }
+
+        .column {
+            flex-basis: 45%;
+            flex-grow: 1;
+        }
+
+        .MentionedWith {
+            margin-bottom: 30px;
+        }
+    }
+}

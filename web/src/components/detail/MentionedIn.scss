@@ -1,0 +1,27 @@
+@import '../variables';
+
+.MentionedIn {
+    .list-row {
+        margin-bottom: .3em;
+    }
+
+    a {
+        color: $mentioned-in-text-color;
+
+        div {
+            display: inline-block;
+        }
+
+        .date {
+            color: $mentioned-in-date-color;
+        }
+
+        .news-title {
+            width: 80%;
+            vertical-align: top;
+            margin-left: .5em;
+
+            font-weight: bold;
+        }
+    }
+}

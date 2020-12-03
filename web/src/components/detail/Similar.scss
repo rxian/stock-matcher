@@ -1,0 +1,59 @@
+@import '../variables';
+
+.Similar {
+    .header-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+
+        .checkbox {
+            label:before, label:after{
+                background: $similar-checkbox-background-color !important;
+                border: 1px solid $similar-checkbox-color !important;
+                color: $similar-checkbox-color !important;
+            }
+
+            label {
+                color: $similar-checkbox-color !important;
+            }
+        }
+    }
+
+    .ui.loader {
+        margin: 20px auto;
+        position: relative;
+        top: unset;
+        left: unset;
+        transform: unset;
+    }
+
+    .ListingSummaryCard {
+        height: 100px;
+        min-height: 15vh;
+
+        display: flex;
+        justify-content: space-between;
+
+        .image {
+            order: 2;
+
+            width: 45vw;
+            max-width: 300px;
+
+            overflow: hidden;
+            border-radius: .25em;
+        }
+
+        .content {
+            order: 1;
+            color: $similar-card-text;
+
+            .title {
+                color: $similar-card-header;
+                font-size: 1.3em;
+                font-weight: bolder;
+                white-space: nowrap;
+            }
+        }
+    }
+}
